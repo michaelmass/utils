@@ -3,6 +3,7 @@ package datautil
 import (
 	"encoding/json"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -21,6 +22,14 @@ var encodeDataTypeMap = map[string]dataEncoderFunc{
 
 // MarshalToFile encodes the data into a file
 func MarshalToFile(data interface{}, filename string) error {
+	dir := filepath.Dir(filename)
+
+	err := os.MkdirAll(dir, fileutil.DefaultDirPerm)
+
+	if err != nil {
+		return errors.Wrapf(err, "Error creating directories to file %s", filename)
+	}
+
 	content, err := Marshal(data, filepath.Ext(filename))
 
 	if err != nil {
