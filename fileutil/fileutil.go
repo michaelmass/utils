@@ -2,6 +2,7 @@ package fileutil
 
 import (
 	"io/ioutil"
+	"os"
 
 	"github.com/pkg/errors"
 )
@@ -27,4 +28,10 @@ func Copy(source string, destination string) error {
 	}
 
 	return nil
+}
+
+// Exist returns a boolean if the file exists
+func Exist(filename string) bool {
+	_, err := os.Stat(filename)
+	return err == nil
 }
