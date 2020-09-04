@@ -30,8 +30,8 @@ func Render(content []byte, data interface{}, wr io.Writer) error {
 }
 
 // RenderFile renders a template file into io.Writer
-func RenderFile(filename string, data interface{}, wr io.Writer) error {
-	content, err := ioutil.ReadFile(filename)
+func RenderFile(reader io.Reader, data interface{}, wr io.Writer) error {
+	content, err := ioutil.ReadAll(reader)
 
 	if err != nil {
 		return err
